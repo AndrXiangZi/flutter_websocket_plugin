@@ -48,6 +48,7 @@ public class SwiftWebsocketManagerPlugin: NSObject, FlutterPlugin {
             streamWebSocketManager.create(url: url, header: header, enableCompression: arguments["enableCompression"] as? Bool, disableSSL: arguments["disableSSL"] as? Bool,
                                           enableRetries: enableRetries!)
 
+            streamWebSocketManager.conectedCallback = connectedHandler
             streamWebSocketManager.closeCallback = closeHandler
             streamWebSocketManager.onClose()
             result("")
@@ -95,4 +96,8 @@ public class SwiftWebsocketManagerPlugin: NSObject, FlutterPlugin {
         // print("closed \(msg)")
         closeStreamHandler.send(data: msg)
     }
+
+    func connectedHandler(isConnected:Bool){
+            messageStreamHandler.send(data: "open")
+     }
 }
